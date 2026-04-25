@@ -1,313 +1,1090 @@
 <!DOCTYPE html>
 <html lang="pl">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Oferta – Sklep Internetowy dla Architekta Wnętrz | web-canvas.pl</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --cream: #F9F5EF; --warm: #EDE6D9; --sand: #C9B89A; --earth: #8B6F47;
-    --deep: #3D2B1A; --accent: #A0522D; --text: #2C1F0E; --muted: #7A6855;
-    --white: #FFFDF9; --green: #4A6741; --green-light: #EDF0E8;
-  }
-  html { scroll-behavior: smooth; }
-  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text); overflow-x: hidden; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oferta – Sklep Internetowy dla Architekta Wnętrz | web-canvas.pl</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-  .hero {
-    min-height: 100vh; background: var(--deep);
-    display: flex; flex-direction: column; justify-content: center;
-    align-items: flex-start; padding: 80px 10%; position: relative; overflow: hidden;
-  }
-  .hero::before {
-    content: ''; position: absolute; inset: 0;
-    background: radial-gradient(ellipse 60% 70% at 80% 50%, rgba(139,111,71,0.25) 0%, transparent 70%),
-                radial-gradient(ellipse 40% 40% at 20% 80%, rgba(160,82,45,0.15) 0%, transparent 60%);
-    pointer-events: none;
-  }
-  .hero-label {
-    font-size: 11px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase;
-    color: var(--sand); margin-bottom: 32px; opacity: 0;
-    animation: fadeUp 0.8s ease 0.2s forwards;
-  }
-  .hero h1 {
-    font-family: 'Cormorant Garamond', serif; font-size: clamp(48px, 7vw, 96px);
-    font-weight: 300; line-height: 1.0; color: var(--white); max-width: 700px;
-    margin-bottom: 24px; opacity: 0; animation: fadeUp 0.9s ease 0.35s forwards;
-  }
-  .hero h1 em { font-style: italic; color: var(--sand); }
-  .hero-sub {
-    font-size: 15px; color: rgba(249,245,239,0.6); font-weight: 300; max-width: 480px;
-    line-height: 1.7; margin-bottom: 56px; opacity: 0; animation: fadeUp 0.9s ease 0.5s forwards;
-  }
-  .hero-meta { display: flex; gap: 48px; opacity: 0; animation: fadeUp 0.9s ease 0.65s forwards; }
-  .hero-meta-item label { display: block; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--sand); margin-bottom: 4px; font-weight: 500; }
-  .hero-meta-item span { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--white); font-weight: 300; }
-  .hero-line {
-    position: absolute; right: 10%; top: 50%; transform: translateY(-50%);
-    width: 1px; height: 0; background: linear-gradient(to bottom, transparent, var(--sand), transparent);
-    animation: lineGrow 1.2s ease 0.8s forwards;
-  }
-  .hero-brand {
-    position: absolute; top: 40px; right: 10%;
-    font-family: 'Cormorant Garamond', serif; font-size: 18px;
-    color: rgba(249,245,239,0.4); font-weight: 300; letter-spacing: 1px;
-    opacity: 0; animation: fadeUp 0.7s ease 0.1s forwards;
-  }
+    :root {
+      --cream: #F9F5EF;
+      --warm: #EDE6D9;
+      --sand: #C9B89A;
+      --earth: #8B6F47;
+      --deep: #3D2B1A;
+      --accent: #A0522D;
+      --text: #2C1F0E;
+      --muted: #7A6855;
+      --white: #FFFDF9;
+      --green: #4A6741;
+      --green-light: #EDF0E8;
+    }
 
-  section { padding: 96px 10%; }
-  .section-label {
-    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
-    color: var(--sand); font-weight: 500; margin-bottom: 16px;
-    display: flex; align-items: center; gap: 12px;
-  }
-  .section-label::after { content: ''; display: block; height: 1px; width: 40px; background: var(--sand); }
-  .section-title {
-    font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 4vw, 56px);
-    font-weight: 300; line-height: 1.1; margin-bottom: 48px; max-width: 600px;
-  }
+    html {
+      scroll-behavior: smooth;
+    }
 
-  .analysis { background: var(--white); }
-  .analysis-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 48px; }
-  .analysis-card {
-    background: var(--cream); padding: 40px;
-    opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-  .analysis-card.visible { opacity: 1; transform: translateY(0); }
-  .analysis-card:nth-child(2) { transition-delay: 0.1s; }
-  .analysis-card:nth-child(3) { transition-delay: 0.2s; }
-  .analysis-card:nth-child(4) { transition-delay: 0.3s; }
-  .analysis-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 400; margin-bottom: 16px; color: var(--accent); }
-  .analysis-card p { font-size: 14px; line-height: 1.8; color: var(--muted); font-weight: 300; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
 
-  .stat-row { display: flex; gap: 2px; margin: 24px 0; }
-  .stat-box { flex: 1; background: var(--deep); padding: 28px 24px; color: var(--white); }
-  .stat-box .num { font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 300; color: var(--sand); line-height: 1; margin-bottom: 4px; }
-  .stat-box .desc { font-size: 11px; color: rgba(249,245,239,0.55); letter-spacing: 1px; font-weight: 300; }
+    .hero {
+      min-height: 100vh;
+      background: var(--deep);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 80px 10%;
+      position: relative;
+      overflow: hidden;
+    }
 
-  .competition { background: var(--cream); }
-  .comp-table { width: 100%; border-collapse: collapse; margin-top: 40px; font-size: 13px; }
-  .comp-table th { text-align: left; padding: 12px 20px; background: var(--deep); color: var(--sand); font-weight: 400; letter-spacing: 1px; font-size: 11px; }
-  .comp-table td { padding: 16px 20px; border-bottom: 1px solid var(--warm); color: var(--muted); vertical-align: top; line-height: 1.5; }
-  .comp-table tr:last-child td { border-bottom: none; }
-  .comp-table tr.highlight td { background: var(--green-light); color: var(--green); font-weight: 500; }
-  .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 500; letter-spacing: 0.5px; }
-  .badge-green { background: var(--green-light); color: var(--green); }
-  .badge-earth { background: var(--warm); color: var(--accent); }
-  .badge-muted { background: var(--warm); color: var(--muted); }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 70% at 80% 50%, rgba(139, 111, 71, 0.25) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 20% 80%, rgba(160, 82, 45, 0.15) 0%, transparent 60%);
+      pointer-events: none;
+    }
 
-  .scope { background: var(--deep); color: var(--white); }
-  .scope .section-title { color: var(--white); }
-  .scope-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 48px; }
-  .scope-item {
-    background: rgba(249,245,239,0.04); border: 1px solid rgba(201,184,154,0.15);
-    padding: 36px 32px; opacity: 0; transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease, background 0.3s;
-  }
-  .scope-item:hover { background: rgba(249,245,239,0.07); }
-  .scope-item.visible { opacity: 1; transform: translateY(0); }
-  .scope-item:nth-child(2) { transition-delay: 0.08s; }
-  .scope-item:nth-child(3) { transition-delay: 0.16s; }
-  .scope-item:nth-child(4) { transition-delay: 0.24s; }
-  .scope-item:nth-child(5) { transition-delay: 0.32s; }
-  .scope-item:nth-child(6) { transition-delay: 0.40s; }
-  .scope-num { font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 300; color: rgba(201,184,154,0.3); line-height: 1; margin-bottom: 16px; }
-  .scope-item h3 { font-size: 14px; font-weight: 500; color: var(--sand); margin-bottom: 12px; letter-spacing: 0.5px; }
-  .scope-item p { font-size: 13px; line-height: 1.75; color: rgba(249,245,239,0.5); font-weight: 300; }
-  .scope-item ul { list-style: none; margin-top: 12px; }
-  .scope-item ul li { font-size: 12px; color: rgba(249,245,239,0.4); padding: 4px 0; padding-left: 14px; position: relative; font-weight: 300; }
-  .scope-item ul li::before { content: '—'; position: absolute; left: 0; color: var(--sand); opacity: 0.5; font-size: 10px; }
+    .hero-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--sand);
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.2s forwards;
+    }
 
-  .timeline-section { background: var(--white); }
-  .timeline { display: flex; gap: 0; margin-top: 56px; position: relative; }
-  .timeline::before { content: ''; position: absolute; top: 28px; left: 0; right: 0; height: 1px; background: var(--warm); z-index: 0; }
-  .timeline-step { flex: 1; padding-top: 56px; padding-right: 24px; position: relative; opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
-  .timeline-step.visible { opacity: 1; transform: translateY(0); }
-  .timeline-step:nth-child(2) { transition-delay: 0.12s; }
-  .timeline-step:nth-child(3) { transition-delay: 0.24s; }
-  .timeline-step:nth-child(4) { transition-delay: 0.36s; }
-  .timeline-dot { position: absolute; top: 20px; left: 0; width: 16px; height: 16px; border-radius: 50%; background: var(--white); border: 2px solid var(--sand); z-index: 1; }
-  .timeline-week { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--sand); margin-bottom: 8px; font-weight: 500; }
-  .timeline-step h3 { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 400; margin-bottom: 8px; }
-  .timeline-step p { font-size: 13px; color: var(--muted); line-height: 1.7; font-weight: 300; }
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(48px, 7vw, 96px);
+      font-weight: 300;
+      line-height: 1.0;
+      color: var(--white);
+      max-width: 700px;
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.35s forwards;
+    }
 
-  .pricing { background: var(--cream); }
-  .price-card { background: var(--deep); padding: 64px; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
-  .price-card.visible { opacity: 1; transform: translateY(0); }
-  .price-amount { font-family: 'Cormorant Garamond', serif; font-size: 96px; font-weight: 300; color: var(--white); line-height: 1; margin-bottom: 8px; }
-  .price-amount span { font-size: 32px; color: var(--sand); }
-  .price-note { font-size: 12px; color: rgba(249,245,239,0.4); letter-spacing: 1px; font-weight: 300; margin-bottom: 32px; }
-  .price-breakdown { list-style: none; }
-  .price-breakdown li { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(201,184,154,0.12); font-size: 13px; color: rgba(249,245,239,0.6); font-weight: 300; }
-  .price-breakdown li:last-child { border-bottom: none; }
-  .price-breakdown li strong { color: var(--sand); font-weight: 400; }
-  .price-right h3 { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 300; color: var(--white); margin-bottom: 24px; line-height: 1.3; }
-  .guarantee-list { list-style: none; }
-  .guarantee-list li { display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; font-size: 13px; color: rgba(249,245,239,0.55); font-weight: 300; line-height: 1.5; }
-  .check { width: 18px; height: 18px; min-width: 18px; border-radius: 50%; background: rgba(74,103,65,0.4); display: flex; align-items: center; justify-content: center; margin-top: 1px; }
-  .check::after { content: '✓'; font-size: 10px; color: #8FBC8F; }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--sand);
+    }
 
-  .cta { background: var(--white); text-align: center; padding: 120px 10%; }
-  .cta .section-label { justify-content: center; }
-  .cta .section-label::after { display: none; }
-  .cta .section-label::before { content: ''; display: block; height: 1px; width: 40px; background: var(--sand); }
-  .cta .section-title { max-width: 100%; text-align: center; margin-left: auto; margin-right: auto; }
-  .cta p { font-size: 15px; color: var(--muted); font-weight: 300; line-height: 1.7; max-width: 500px; margin: 0 auto 48px; }
-  .cta-btn { display: inline-block; padding: 18px 56px; background: var(--deep); color: var(--white); text-decoration: none; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; font-weight: 400; transition: background 0.3s; border: none; cursor: pointer; }
-  .cta-btn:hover { background: var(--accent); }
-  .cta-contact { margin-top: 32px; font-size: 13px; color: var(--muted); font-weight: 300; }
-  .cta-contact a { color: var(--accent); text-decoration: none; }
+    .hero-sub {
+      font-size: 15px;
+      color: rgba(249, 245, 239, 0.6);
+      font-weight: 300;
+      max-width: 480px;
+      line-height: 1.7;
+      margin-bottom: 56px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.5s forwards;
+    }
 
-  footer { background: var(--deep); padding: 40px 10%; display: flex; justify-content: space-between; align-items: center; }
-  footer p { font-size: 11px; color: rgba(249,245,239,0.3); font-weight: 300; letter-spacing: 0.5px; }
-  .footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 18px; color: rgba(249,245,239,0.5); font-weight: 300; }
+    .hero-meta {
+      display: flex;
+      gap: 48px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.65s forwards;
+    }
 
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
-  @keyframes lineGrow { from { height: 0; } to { height: 180px; } }
+    .hero-meta-item label {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--sand);
+      margin-bottom: 4px;
+      font-weight: 500;
+    }
 
-  @media (max-width: 768px) {
-    .analysis-grid, .scope-grid { grid-template-columns: 1fr; }
-    .timeline { flex-direction: column; }
-    .price-card { grid-template-columns: 1fr; gap: 40px; }
-    .price-amount { font-size: 64px; }
-    section { padding: 64px 6%; }
-    .hero { padding: 60px 6%; }
-    .hero-meta { flex-direction: column; gap: 20px; }
-    .comp-table { font-size: 12px; }
-    .comp-table th, .comp-table td { padding: 10px 12px; }
-  }
-  @media print {
-    .hero { min-height: auto; page-break-after: always; }
-    .scope-item, .analysis-card, .timeline-step, .price-card { opacity: 1 !important; transform: none !important; }
-  }
-</style>
+    .hero-meta-item span {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      color: var(--white);
+      font-weight: 300;
+    }
+
+    .hero-line {
+      position: absolute;
+      right: 10%;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 1px;
+      height: 0;
+      background: linear-gradient(to bottom, transparent, var(--sand), transparent);
+      animation: lineGrow 1.2s ease 0.8s forwards;
+    }
+
+    .hero-brand {
+      position: absolute;
+      top: 40px;
+      right: 10%;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      color: rgba(249, 245, 239, 0.4);
+      font-weight: 300;
+      letter-spacing: 1px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.1s forwards;
+    }
+
+    section {
+      padding: 96px 10%;
+    }
+
+    .section-label {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--sand);
+      font-weight: 500;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-label::after {
+      content: '';
+      display: block;
+      height: 1px;
+      width: 40px;
+      background: var(--sand);
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 4vw, 56px);
+      font-weight: 300;
+      line-height: 1.1;
+      margin-bottom: 48px;
+      max-width: 600px;
+    }
+
+    .analysis {
+      background: var(--white);
+    }
+
+    .analysis-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      margin-top: 48px;
+    }
+
+    .analysis-card {
+      background: var(--cream);
+      padding: 40px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .analysis-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .analysis-card:nth-child(2) {
+      transition-delay: 0.1s;
+    }
+
+    .analysis-card:nth-child(3) {
+      transition-delay: 0.2s;
+    }
+
+    .analysis-card:nth-child(4) {
+      transition-delay: 0.3s;
+    }
+
+    .analysis-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 400;
+      margin-bottom: 16px;
+      color: var(--accent);
+    }
+
+    .analysis-card p {
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--muted);
+      font-weight: 300;
+    }
+
+    .stat-row {
+      display: flex;
+      gap: 2px;
+      margin: 24px 0;
+    }
+
+    .stat-box {
+      flex: 1;
+      background: var(--deep);
+      padding: 28px 24px;
+      color: var(--white);
+    }
+
+    .stat-box .num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 42px;
+      font-weight: 300;
+      color: var(--sand);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .stat-box .desc {
+      font-size: 11px;
+      color: rgba(249, 245, 239, 0.55);
+      letter-spacing: 1px;
+      font-weight: 300;
+    }
+
+    .competition {
+      background: var(--cream);
+    }
+
+    .comp-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 40px;
+      font-size: 13px;
+    }
+
+    .comp-table th {
+      text-align: left;
+      padding: 12px 20px;
+      background: var(--deep);
+      color: var(--sand);
+      font-weight: 400;
+      letter-spacing: 1px;
+      font-size: 11px;
+    }
+
+    .comp-table td {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--warm);
+      color: var(--muted);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+
+    .comp-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .comp-table tr.highlight td {
+      background: var(--green-light);
+      color: var(--green);
+      font-weight: 500;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-green {
+      background: var(--green-light);
+      color: var(--green);
+    }
+
+    .badge-earth {
+      background: var(--warm);
+      color: var(--accent);
+    }
+
+    .badge-muted {
+      background: var(--warm);
+      color: var(--muted);
+    }
+
+    .scope {
+      background: var(--deep);
+      color: var(--white);
+    }
+
+    .scope .section-title {
+      color: var(--white);
+    }
+
+    .scope-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 48px;
+    }
+
+    .scope-item {
+      background: rgba(249, 245, 239, 0.04);
+      border: 1px solid rgba(201, 184, 154, 0.15);
+      padding: 36px 32px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease, background 0.3s;
+    }
+
+    .scope-item:hover {
+      background: rgba(249, 245, 239, 0.07);
+    }
+
+    .scope-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .scope-item:nth-child(2) {
+      transition-delay: 0.08s;
+    }
+
+    .scope-item:nth-child(3) {
+      transition-delay: 0.16s;
+    }
+
+    .scope-item:nth-child(4) {
+      transition-delay: 0.24s;
+    }
+
+    .scope-item:nth-child(5) {
+      transition-delay: 0.32s;
+    }
+
+    .scope-item:nth-child(6) {
+      transition-delay: 0.40s;
+    }
+
+    .scope-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 48px;
+      font-weight: 300;
+      color: rgba(201, 184, 154, 0.3);
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    .scope-item h3 {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--sand);
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
+    }
+
+    .scope-item p {
+      font-size: 13px;
+      line-height: 1.75;
+      color: rgba(249, 245, 239, 0.5);
+      font-weight: 300;
+    }
+
+    .scope-item ul {
+      list-style: none;
+      margin-top: 12px;
+    }
+
+    .scope-item ul li {
+      font-size: 12px;
+      color: rgba(249, 245, 239, 0.4);
+      padding: 4px 0;
+      padding-left: 14px;
+      position: relative;
+      font-weight: 300;
+    }
+
+    .scope-item ul li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--sand);
+      opacity: 0.5;
+      font-size: 10px;
+    }
+
+    .timeline-section {
+      background: var(--white);
+    }
+
+    .timeline {
+      display: flex;
+      gap: 0;
+      margin-top: 56px;
+      position: relative;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 28px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--warm);
+      z-index: 0;
+    }
+
+    .timeline-step {
+      flex: 1;
+      padding-top: 56px;
+      padding-right: 24px;
+      position: relative;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .timeline-step.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .timeline-step:nth-child(2) {
+      transition-delay: 0.12s;
+    }
+
+    .timeline-step:nth-child(3) {
+      transition-delay: 0.24s;
+    }
+
+    .timeline-step:nth-child(4) {
+      transition-delay: 0.36s;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      top: 20px;
+      left: 0;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 2px solid var(--sand);
+      z-index: 1;
+    }
+
+    .timeline-week {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--sand);
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .timeline-step h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+
+    .timeline-step p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    .pricing {
+      background: var(--cream);
+    }
+
+    .price-card {
+      background: var(--deep);
+      padding: 64px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .price-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .price-amount {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 96px;
+      font-weight: 300;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .price-amount span {
+      font-size: 32px;
+      color: var(--sand);
+    }
+
+    .price-note {
+      font-size: 12px;
+      color: rgba(249, 245, 239, 0.4);
+      letter-spacing: 1px;
+      font-weight: 300;
+      margin-bottom: 32px;
+    }
+
+    .price-breakdown {
+      list-style: none;
+    }
+
+    .price-breakdown li {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(201, 184, 154, 0.12);
+      font-size: 13px;
+      color: rgba(249, 245, 239, 0.6);
+      font-weight: 300;
+    }
+
+    .price-breakdown li:last-child {
+      border-bottom: none;
+    }
+
+    .price-breakdown li strong {
+      color: var(--sand);
+      font-weight: 400;
+    }
+
+    .price-right h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 300;
+      color: var(--white);
+      margin-bottom: 24px;
+      line-height: 1.3;
+    }
+
+    .guarantee-list {
+      list-style: none;
+    }
+
+    .guarantee-list li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 10px 0;
+      font-size: 13px;
+      color: rgba(249, 245, 239, 0.55);
+      font-weight: 300;
+      line-height: 1.5;
+    }
+
+    .check {
+      width: 18px;
+      height: 18px;
+      min-width: 18px;
+      border-radius: 50%;
+      background: rgba(74, 103, 65, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+    }
+
+    .check::after {
+      content: '✓';
+      font-size: 10px;
+      color: #8FBC8F;
+    }
+
+    .cta {
+      background: var(--white);
+      text-align: center;
+      padding: 120px 10%;
+    }
+
+    .cta .section-label {
+      justify-content: center;
+    }
+
+    .cta .section-label::after {
+      display: none;
+    }
+
+    .cta .section-label::before {
+      content: '';
+      display: block;
+      height: 1px;
+      width: 40px;
+      background: var(--sand);
+    }
+
+    .cta .section-title {
+      max-width: 100%;
+      text-align: center;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta p {
+      font-size: 15px;
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.7;
+      max-width: 500px;
+      margin: 0 auto 48px;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      padding: 18px 56px;
+      background: var(--deep);
+      color: var(--white);
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 400;
+      transition: background 0.3s;
+      border: none;
+      cursor: pointer;
+    }
+
+    .cta-btn:hover {
+      background: var(--accent);
+    }
+
+    .cta-contact {
+      margin-top: 32px;
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 300;
+    }
+
+    .cta-contact a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    footer {
+      background: var(--deep);
+      padding: 40px 10%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer p {
+      font-size: 11px;
+      color: rgba(249, 245, 239, 0.3);
+      font-weight: 300;
+      letter-spacing: 0.5px;
+    }
+
+    .footer-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      color: rgba(249, 245, 239, 0.5);
+      font-weight: 300;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes lineGrow {
+      from {
+        height: 0;
+      }
+
+      to {
+        height: 180px;
+      }
+    }
+
+    @media (max-width: 768px) {
+
+      .analysis-grid,
+      .scope-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .timeline {
+        flex-direction: column;
+      }
+
+      .price-card {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .price-amount {
+        font-size: 64px;
+      }
+
+      section {
+        padding: 64px 6%;
+      }
+
+      .hero {
+        padding: 60px 6%;
+      }
+
+      .hero-meta {
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .comp-table {
+        font-size: 12px;
+      }
+
+      .comp-table th,
+      .comp-table td {
+        padding: 10px 12px;
+      }
+    }
+
+    @media print {
+      .hero {
+        min-height: auto;
+        page-break-after: always;
+      }
+
+      .scope-item,
+      .analysis-card,
+      .timeline-step,
+      .price-card {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<section class="hero">
-  <div class="hero-brand">web-canvas.pl</div>
-  <div class="hero-label">Oferta Handlowa · 2025</div>
-  <h1>Sklep<br>internetowy<br>dla <em>architekta</em></h1>
-  <p class="hero-sub">Kompleksowe wdrożenie platformy sprzedaży produktów cyfrowych z integracją Stripe i automatycznym dostępem do kursów online.</p>
-  <div class="hero-meta">
-    <div class="hero-meta-item"><label>Wycena netto</label><span>3 000 zł</span></div>
-    <div class="hero-meta-item"><label>Czas realizacji</label><span>4–5 tygodni</span></div>
-    <div class="hero-meta-item"><label>Gwarancja</label><span>3 miesiące</span></div>
-  </div>
-  <div class="hero-line"></div>
-</section>
-
-<section class="analysis">
-  <div class="section-label">01 — Analiza</div>
-  <h2 class="section-title">Rynek produktów cyfrowych dla projektantów wnętrz</h2>
-  <div class="stat-row">
-    <div class="stat-box"><div class="num">+34%</div><div class="desc">Roczny wzrost rynku kursów online w Polsce (2023–2024)</div></div>
-    <div class="stat-box"><div class="num">68%</div><div class="desc">Architektów wnętrz nie posiada własnego kanału sprzedaży cyfrowej</div></div>
-    <div class="stat-box"><div class="num">2,4×</div><div class="desc">Wyższe przychody przy własnym sklepie vs. platformy zewnętrzne</div></div>
-    <div class="stat-box"><div class="num">82%</div><div class="desc">Klientów wraca po kolejny produkt przy dobrym doświadczeniu zakupu</div></div>
-  </div>
-  <div class="analysis-grid">
-    <div class="analysis-card"><h3>Szansa rynkowa</h3><p>Branża projektowania wnętrz przeżywa cyfrową rewolucję. Klientki coraz chętniej kupują wiedzę online — od moodboardów przez kursy kolorystyki po dostępy do bibliotek materiałów. Własna platforma pozwala monetyzować ekspertyzę bez dzielenia się marżą z agregatorami.</p></div>
-    <div class="analysis-card"><h3>Grupa docelowa</h3><p>Potencjalni klienci to osoby prywatne planujące remont (25–45 lat), właściciele małych firm szukający inspiracji, oraz adepci branży chcący zdobyć wiedzę. Segment premium jest gotowy płacić 200–800 zł za dostęp do kursu od uznanego eksperta.</p></div>
-    <div class="analysis-card"><h3>Przewaga własnej platformy</h3><p>Brak prowizji platform zewnętrznych (Udemy pobiera 50–75%), pełna kontrola nad brandingiem, baza danych klientów własna, możliwość budowania subskrypcji i społeczności. Zwrot z inwestycji już przy sprzedaży 6–8 kursów.</p></div>
-    <div class="analysis-card"><h3>Trendy 2025</h3><p>Rosnące zainteresowanie wnętrzarstwem biofilicznym i skandynawskim minimalizmem. Klientki Instagrama i Pinterest aktywnie szukają autorskich kursów od specjalistów. Formaty hybrydowe (PDF + wideo + konsultacja) osiągają najwyższe współczynniki konwersji.</p></div>
-  </div>
-</section>
-
-<section class="competition">
-  <div class="section-label">02 — Konkurencja</div>
-  <h2 class="section-title">Jak wyróżnić się na tle konkurentów</h2>
-  <table class="comp-table">
-    <thead>
-      <tr><th>Typ platformy / konkurent</th><th>Model sprzedaży</th><th>Prowizja / koszt</th><th>Kontrola marki</th><th>Relacja z klientem</th><th>Ocena</th></tr>
-    </thead>
-    <tbody>
-      <tr><td><strong>Udemy</strong></td><td>Agregator kursów</td><td>50–75% prowizji</td><td>Bardzo niska</td><td>Brak dostępu do e-maili</td><td><span class="badge badge-muted">Słabe</span></td></tr>
-      <tr><td><strong>Teachable / Thinkific</strong></td><td>Platforma SaaS</td><td>0–5% + 39–119 USD/mies.</td><td>Średnia</td><td>Własna baza, ograniczone</td><td><span class="badge badge-earth">Średnie</span></td></tr>
-      <tr><td><strong>Instagram / social sprzedaż</strong></td><td>Ręczna sprzedaż</td><td>0% (czas własny)</td><td>Wysoka</td><td>Bezpośrednia, ale nieuporządkowana</td><td><span class="badge badge-muted">Brak skali</span></td></tr>
-      <tr><td><strong>Lokalni konkurenci PL</strong></td><td>Mix: blog + PDF</td><td>Różnie</td><td>Średnia</td><td>Ograniczona automatyzacja</td><td><span class="badge badge-muted">Przeciętne</span></td></tr>
-      <tr class="highlight"><td><strong>✦ Twój własny sklep</strong></td><td>Własna platforma</td><td>Tylko opłaty Stripe (~1,5%)</td><td>Pełna kontrola</td><td>Własna baza, automatyzacja</td><td><span class="badge badge-green">Optymalne</span></td></tr>
-    </tbody>
-  </table>
-</section>
-
-<section class="scope">
-  <div class="section-label" style="color: var(--sand);">03 — Zakres prac</div>
-  <h2 class="section-title">Co dostarczam w ramach projektu</h2>
-  <div class="scope-grid">
-    <div class="scope-item"><div class="scope-num">01</div><h3>Sklep internetowy</h3><p>Responsywna strona w estetyce interior design z katalogiem produktów cyfrowych.</p><ul><li>Strona główna z animowanym hero</li><li>Strona produktu / kursu</li><li>Koszyk i checkout</li><li>Strona dziękujemy</li></ul></div>
-    <div class="scope-item"><div class="scope-num">02</div><h3>Płatności Stripe</h3><p>Pełna integracja bramki płatniczej z obsługą kart i BLIK.</p><ul><li>Stripe Checkout lub Elements</li><li>Webhooks – automatyzacja</li><li>Faktury automatyczne</li><li>Obsługa zwrotów</li></ul></div>
-    <div class="scope-item"><div class="scope-num">03</div><h3>Dostęp do kursu</h3><p>System automatycznego nadawania dostępu po zakupie — zero ręcznej pracy.</p><ul><li>Chroniony obszar z kursem</li><li>Link do pobrania / streamu</li><li>E-mail z dostępem po zakupie</li><li>Zarządzanie dostępami</li></ul></div>
-    <div class="scope-item"><div class="scope-num">04</div><h3>Animacje & UX</h3><p>Płynne przejścia sekcji i efektowne pojawianie się produktów przy scrollowaniu.</p><ul><li>Scroll-reveal animacje</li><li>Płynne przejścia między stronami</li><li>Hover efekty na produktach</li><li>Loader i mikrointerakcje</li></ul></div>
-    <div class="scope-item"><div class="scope-num">05</div><h3>SEO & Analityka</h3><p>Optymalizacja pod wyszukiwarki i śledzenie konwersji od pierwszego dnia.</p><ul><li>Meta tagi i Open Graph</li><li>Google Analytics 4</li><li>Śledzenie zakupów Stripe</li><li>Sitemap i robots.txt</li></ul></div>
-    <div class="scope-item"><div class="scope-num">06</div><h3>Wdrożenie & Szkolenie</h3><p>Uruchomienie na Twojej domenie i przekazanie wiedzy jak samodzielnie zarządzać sklepem.</p><ul><li>Konfiguracja hostingu</li><li>Wdrożenie produkcyjne</li><li>Sesja szkoleniowa (1h)</li><li>Instrukcja obsługi (PDF)</li></ul></div>
-  </div>
-</section>
-
-<section class="timeline-section">
-  <div class="section-label">04 — Harmonogram</div>
-  <h2 class="section-title">Realizacja w 4–5 tygodni</h2>
-  <div class="timeline">
-    <div class="timeline-step"><div class="timeline-dot"></div><div class="timeline-week">Tydzień 1</div><h3>Projekt & Strategia</h3><p>Brief, zbieranie materiałów, projekt graficzny stron w Figma, zatwierdzenie przez klientkę.</p></div>
-    <div class="timeline-step"><div class="timeline-dot"></div><div class="timeline-week">Tydzień 2–3</div><h3>Budowa sklepu</h3><p>Kodowanie front-end, integracja Stripe, system dostępów do kursu, animacje.</p></div>
-    <div class="timeline-step"><div class="timeline-dot"></div><div class="timeline-week">Tydzień 4</div><h3>Testy & Dopracowanie</h3><p>Testy płatności (tryb testowy Stripe), korekty UX, optymalizacja mobilna.</p></div>
-    <div class="timeline-step"><div class="timeline-dot"></div><div class="timeline-week">Tydzień 5</div><h3>Launch 🚀</h3><p>Wdrożenie na produkcję, szkolenie, przekazanie projektu z 3-miesięcznym wsparciem.</p></div>
-  </div>
-</section>
-
-<section class="pricing">
-  <div class="section-label">05 — Wycena</div>
-  <h2 class="section-title">Transparentna wycena</h2>
-  <div class="price-card">
-    <div>
-      <div class="price-amount"><span>zł</span>3 000</div>
-      <div class="price-note">NETTO · JEDNORAZOWO · BEZ UKRYTYCH KOSZTÓW</div>
-      <ul class="price-breakdown">
-        <li><span>Projekt graficzny (Figma)</span><strong>w cenie</strong></li>
-        <li><span>Front-end + animacje</span><strong>w cenie</strong></li>
-        <li><span>Integracja Stripe</span><strong>w cenie</strong></li>
-        <li><span>System dostępu do kursu</span><strong>w cenie</strong></li>
-        <li><span>SEO + GA4</span><strong>w cenie</strong></li>
-        <li><span>Szkolenie + instrukcja PDF</span><strong>w cenie</strong></li>
-        <li><span>3 miesiące wsparcia</span><strong>w cenie</strong></li>
-        <li><span>Prowizja Stripe od sprzedaży</span><strong>~1,5% / transakcja</strong></li>
-      </ul>
+  <section class="hero">
+    <div class="hero-brand">web-canvas.pl</div>
+    <div class="hero-label">Oferta Handlowa · 2025</div>
+    <h1>Sklep internetowy</h1>
+    <p class="hero-sub">Kompleksowe wdrożenie platformy sprzedaży produktów cyfrowych z integracją Stripe i
+      automatycznym dostępem do kursów online.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><label>Wycena netto</label><span>3 000 zł</span></div>
+      <div class="hero-meta-item"><label>Czas realizacji</label><span>4–5 tygodni</span></div>
+      <div class="hero-meta-item"><label>Gwarancja</label><span>3 miesiące</span></div>
     </div>
-    <div class="price-right">
-      <h3>Co otrzymujesz ponad standardowe wdrożenie</h3>
-      <ul class="guarantee-list">
-        <li><div class="check"></div>Automatyczny dostęp do kursu po zakupie — żadnej ręcznej pracy z Twojej strony</li>
-        <li><div class="check"></div>Projekt w estetyce premium — spójny z brandem architekta wnętrz</li>
-        <li><div class="check"></div>Animacje scroll-reveal i płynne przejścia stron (jak u top marek wnętrzarskich)</li>
-        <li><div class="check"></div>Gotowość na skalowanie — łatwe dodanie kolejnych kursów i produktów</li>
-        <li><div class="check"></div>Własna baza klientów — zero uzależnienia od zewnętrznych platform</li>
-        <li><div class="check"></div>ROI już przy pierwszych 5–6 sprzedanych kursach (przy cenie 600 zł/kurs)</li>
-      </ul>
+    <div class="hero-line"></div>
+  </section>
+
+  <section class="analysis">
+    <div class="section-label">01 — Analiza</div>
+    <h2 class="section-title">Rynek produktów cyfrowych dla projektantów wnętrz</h2>
+    <div class="stat-row">
+      <div class="stat-box">
+        <div class="num">+34%</div>
+        <div class="desc">Roczny wzrost rynku kursów online w Polsce (2023–2024)</div>
+      </div>
+      <div class="stat-box">
+        <div class="num">68%</div>
+        <div class="desc">Architektów wnętrz nie posiada własnego kanału sprzedaży cyfrowej</div>
+      </div>
+      <div class="stat-box">
+        <div class="num">2,4×</div>
+        <div class="desc">Wyższe przychody przy własnym sklepie vs. platformy zewnętrzne</div>
+      </div>
+      <div class="stat-box">
+        <div class="num">82%</div>
+        <div class="desc">Klientów wraca po kolejny produkt przy dobrym doświadczeniu zakupu</div>
+      </div>
     </div>
-  </div>
-</section>
+    <div class="analysis-grid">
+      <div class="analysis-card">
+        <h3>Szansa rynkowa</h3>
+        <p>Branża projektowania wnętrz przeżywa cyfrową rewolucję. Klientki coraz chętniej kupują wiedzę online — od
+          moodboardów przez kursy kolorystyki po dostępy do bibliotek materiałów. Własna platforma pozwala monetyzować
+          ekspertyzę bez dzielenia się marżą z agregatorami.</p>
+      </div>
+      <div class="analysis-card">
+        <h3>Grupa docelowa</h3>
+        <p>Potencjalni klienci to osoby prywatne planujące remont (25–45 lat), właściciele małych firm szukający
+          inspiracji, oraz adepci branży chcący zdobyć wiedzę. Segment premium jest gotowy płacić 200–800 zł za dostęp
+          do kursu od uznanego eksperta.</p>
+      </div>
+      <div class="analysis-card">
+        <h3>Przewaga własnej platformy</h3>
+        <p>Brak prowizji platform zewnętrznych (Udemy pobiera 50–75%), pełna kontrola nad brandingiem, baza danych
+          klientów własna, możliwość budowania subskrypcji i społeczności. Zwrot z inwestycji już przy sprzedaży 6–8
+          kursów.</p>
+      </div>
+      <div class="analysis-card">
+        <h3>Trendy 2025</h3>
+        <p>Rosnące zainteresowanie wnętrzarstwem biofilicznym i skandynawskim minimalizmem. Klientki Instagrama i
+          Pinterest aktywnie szukają autorskich kursów od specjalistów. Formaty hybrydowe (PDF + wideo + konsultacja)
+          osiągają najwyższe współczynniki konwersji.</p>
+      </div>
+    </div>
+  </section>
 
-<section class="cta">
-  <div class="section-label">06 — Następny krok</div>
-  <h2 class="section-title">Zacznijmy razem budować Twój sklep</h2>
-  <p>Oferta ważna 30 dni. Projekt ruszamy tydzień po podpisaniu umowy i wpłacie zaliczki (50%).</p>
-  <a class="cta-btn" href="mailto:kontakt@web-canvas.pl">Przyjmuję ofertę →</a>
-  <p class="cta-contact">Masz pytania? Napisz: <a href="mailto:kontakt@web-canvas.pl">kontakt@web-canvas.pl</a></p>
-</section>
+  <section class="competition">
+    <div class="section-label">02 — Konkurencja</div>
+    <h2 class="section-title">Jak wyróżnić się na tle konkurentów</h2>
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Typ platformy / konkurent</th>
+          <th>Model sprzedaży</th>
+          <th>Prowizja / koszt</th>
+          <th>Kontrola marki</th>
+          <th>Relacja z klientem</th>
+          <th>Ocena</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Udemy</strong></td>
+          <td>Agregator kursów</td>
+          <td>50–75% prowizji</td>
+          <td>Bardzo niska</td>
+          <td>Brak dostępu do e-maili</td>
+          <td><span class="badge badge-muted">Słabe</span></td>
+        </tr>
+        <tr>
+          <td><strong>Teachable / Thinkific</strong></td>
+          <td>Platforma SaaS</td>
+          <td>0–5% + 39–119 USD/mies.</td>
+          <td>Średnia</td>
+          <td>Własna baza, ograniczone</td>
+          <td><span class="badge badge-earth">Średnie</span></td>
+        </tr>
+        <tr>
+          <td><strong>Instagram / social sprzedaż</strong></td>
+          <td>Ręczna sprzedaż</td>
+          <td>0% (czas własny)</td>
+          <td>Wysoka</td>
+          <td>Bezpośrednia, ale nieuporządkowana</td>
+          <td><span class="badge badge-muted">Brak skali</span></td>
+        </tr>
+        <tr>
+          <td><strong>Lokalni konkurenci PL</strong></td>
+          <td>Mix: blog + PDF</td>
+          <td>Różnie</td>
+          <td>Średnia</td>
+          <td>Ograniczona automatyzacja</td>
+          <td><span class="badge badge-muted">Przeciętne</span></td>
+        </tr>
+        <tr class="highlight">
+          <td><strong>✦ Twój własny sklep</strong></td>
+          <td>Własna platforma</td>
+          <td>Tylko opłaty Stripe (~1,5%)</td>
+          <td>Pełna kontrola</td>
+          <td>Własna baza, automatyzacja</td>
+          <td><span class="badge badge-green">Optymalne</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
 
-<footer>
-  <div class="footer-brand">web-canvas.pl</div>
-  <p>Oferta przygotowana indywidualnie · Ważna 30 dni od daty wystawienia · Wszystkie ceny netto</p>
-</footer>
+  <section class="scope">
+    <div class="section-label" style="color: var(--sand);">03 — Zakres prac</div>
+    <h2 class="section-title">Co dostarczam w ramach projektu</h2>
+    <div class="scope-grid">
+      <div class="scope-item">
+        <div class="scope-num">01</div>
+        <h3>Sklep internetowy</h3>
+        <p>Responsywna strona w estetyce interior design z katalogiem produktów cyfrowych.</p>
+        <ul>
+          <li>Strona główna z animowanym hero</li>
+          <li>Strona produktu / kursu</li>
+          <li>Koszyk i checkout</li>
+          <li>Strona dziękujemy</li>
+        </ul>
+      </div>
+      <div class="scope-item">
+        <div class="scope-num">02</div>
+        <h3>Płatności Stripe</h3>
+        <p>Pełna integracja bramki płatniczej z obsługą kart i BLIK.</p>
+        <ul>
+          <li>Stripe Checkout lub Elements</li>
+          <li>Webhooks – automatyzacja</li>
+          <li>Faktury automatyczne</li>
+          <li>Obsługa zwrotów</li>
+        </ul>
+      </div>
+      <div class="scope-item">
+        <div class="scope-num">03</div>
+        <h3>Dostęp do kursu</h3>
+        <p>System automatycznego nadawania dostępu po zakupie — zero ręcznej pracy.</p>
+        <ul>
+          <li>Chroniony obszar z kursem</li>
+          <li>Link do pobrania / streamu</li>
+          <li>E-mail z dostępem po zakupie</li>
+          <li>Zarządzanie dostępami</li>
+        </ul>
+      </div>
+      <div class="scope-item">
+        <div class="scope-num">04</div>
+        <h3>Animacje & UX</h3>
+        <p>Płynne przejścia sekcji i efektowne pojawianie się produktów przy scrollowaniu.</p>
+        <ul>
+          <li>Scroll-reveal animacje</li>
+          <li>Płynne przejścia między stronami</li>
+          <li>Hover efekty na produktach</li>
+          <li>Loader i mikrointerakcje</li>
+        </ul>
+      </div>
+      <div class="scope-item">
+        <div class="scope-num">05</div>
+        <h3>SEO & Analityka</h3>
+        <p>Optymalizacja pod wyszukiwarki i śledzenie konwersji od pierwszego dnia.</p>
+        <ul>
+          <li>Meta tagi i Open Graph</li>
+          <li>Google Analytics 4</li>
+          <li>Śledzenie zakupów Stripe</li>
+          <li>Sitemap i robots.txt</li>
+        </ul>
+      </div>
+      <div class="scope-item">
+        <div class="scope-num">06</div>
+        <h3>Wdrożenie & Szkolenie</h3>
+        <p>Uruchomienie na Twojej domenie i przekazanie wiedzy jak samodzielnie zarządzać sklepem.</p>
+        <ul>
+          <li>Konfiguracja hostingu</li>
+          <li>Wdrożenie produkcyjne</li>
+          <li>Sesja szkoleniowa (1h)</li>
+          <li>Instrukcja obsługi (PDF)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-<script>
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add('visible');
-    });
-  }, { threshold: 0.12 });
-  document.querySelectorAll('.analysis-card, .scope-item, .timeline-step, .price-card').forEach(el => observer.observe(el));
-</script>
+  <section class="timeline-section">
+    <div class="section-label">04 — Harmonogram</div>
+    <h2 class="section-title">Realizacja w 4–5 tygodni</h2>
+    <div class="timeline">
+      <div class="timeline-step">
+        <div class="timeline-dot"></div>
+        <div class="timeline-week">Tydzień 1</div>
+        <h3>Projekt & Strategia</h3>
+        <p>Brief, zbieranie materiałów, projekt graficzny stron w Figma, zatwierdzenie przez klientkę.</p>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-dot"></div>
+        <div class="timeline-week">Tydzień 2–3</div>
+        <h3>Budowa sklepu</h3>
+        <p>Kodowanie front-end, integracja Stripe, system dostępów do kursu, animacje.</p>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-dot"></div>
+        <div class="timeline-week">Tydzień 4</div>
+        <h3>Testy & Dopracowanie</h3>
+        <p>Testy płatności (tryb testowy Stripe), korekty UX, optymalizacja mobilna.</p>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-dot"></div>
+        <div class="timeline-week">Tydzień 5</div>
+        <h3>Launch 🚀</h3>
+        <p>Wdrożenie na produkcję, szkolenie, przekazanie projektu z 3-miesięcznym wsparciem.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="pricing">
+    <div class="section-label">05 — Wycena</div>
+    <h2 class="section-title">Transparentna wycena</h2>
+    <div class="price-card">
+      <div>
+        <div class="price-amount"><span>zł</span>3 000</div>
+        <div class="price-note">NETTO · JEDNORAZOWO · BEZ UKRYTYCH KOSZTÓW</div>
+        <ul class="price-breakdown">
+          <li><span>Projekt graficzny (Figma)</span><strong>w cenie</strong></li>
+          <li><span>Front-end + animacje</span><strong>w cenie</strong></li>
+          <li><span>Integracja Stripe</span><strong>w cenie</strong></li>
+          <li><span>System dostępu do kursu</span><strong>w cenie</strong></li>
+          <li><span>SEO + GA4</span><strong>w cenie</strong></li>
+          <li><span>Szkolenie + instrukcja PDF</span><strong>w cenie</strong></li>
+          <li><span>3 miesiące wsparcia</span><strong>w cenie</strong></li>
+          <li><span>Prowizja Stripe od sprzedaży</span><strong>~1,5% / transakcja</strong></li>
+        </ul>
+      </div>
+      <div class="price-right">
+        <h3>Co otrzymujesz ponad standardowe wdrożenie</h3>
+        <ul class="guarantee-list">
+          <li>
+            <div class="check"></div>Automatyczny dostęp do kursu po zakupie — żadnej ręcznej pracy z Twojej strony
+          </li>
+          <li>
+            <div class="check"></div>Projekt w estetyce premium — spójny z brandem architekta wnętrz
+          </li>
+          <li>
+            <div class="check"></div>Animacje scroll-reveal i płynne przejścia stron (jak u top marek wnętrzarskich)
+          </li>
+          <li>
+            <div class="check"></div>Gotowość na skalowanie — łatwe dodanie kolejnych kursów i produktów
+          </li>
+          <li>
+            <div class="check"></div>Własna baza klientów — zero uzależnienia od zewnętrznych platform
+          </li>
+          <li>
+            <div class="check"></div>ROI już przy pierwszych 5–6 sprzedanych kursach (przy cenie 600 zł/kurs)
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="section-label">06 — Następny krok</div>
+    <h2 class="section-title">Zacznijmy razem budować Twój sklep</h2>
+    <p>Oferta ważna 30 dni. Projekt ruszamy tydzień po podpisaniu umowy i wpłacie zaliczki (50%).</p>
+    <a class="cta-btn" href="mailto:kontakt@web-canvas.pl">Przyjmuję ofertę →</a>
+    <p class="cta-contact">Masz pytania? Napisz: <a href="mailto:kontakt@web-canvas.pl">kontakt@web-canvas.pl</a></p>
+  </section>
+
+  <footer>
+    <div class="footer-brand">web-canvas.pl</div>
+    <p>Oferta przygotowana indywidualnie · Ważna 30 dni od daty wystawienia · Wszystkie ceny netto</p>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.analysis-card, .scope-item, .timeline-step, .price-card').forEach(el => observer.observe(el));
+  </script>
 </body>
+
 </html>
